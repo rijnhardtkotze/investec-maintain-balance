@@ -1,0 +1,25 @@
+org: rijnhardtkotze
+app: investec-maintain-balance
+service: investec-maintain-balance
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+
+functions:
+  maintain-balance:
+    handler: handler.maintain_balance
+    events:
+      - schedule: rate(5 minutes)
+    environment: 
+      API_KEY: ${param:investecApiKey}
+      CLIENT_ID: ${param:investecClientId}
+      CLIENT_SECRET: ${param:investecClientSecret}
+      PRIMARY_ACCOUNT_ID: ${param:investecPrimaryAccountId}
+      SAVINGS_ACCOUNT_ID: ${param:investecSavingsAccountId}
+      PRIMARY_ACCOUNT_MIN_BALANCE: ${param:investecPrimaryAccountMinBalance}
+
+plugins:
+  - serverless-python-requirements
