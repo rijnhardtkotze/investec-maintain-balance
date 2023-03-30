@@ -68,6 +68,10 @@ def maintain_balance(event, context):
 
     primary_account_balance = get_account_balance(primary_account_id, token)
     savings_account_balance = get_account_balance(savings_account_id, token)
+
+    # Handle errors on getting account balances
+    if primary_account_balance is NotImplementedError or savings_account_balance is NotImplementedError:
+        return {"statusCode": 500, "body": 'Error getting account balances'}
     
     print('=================================================================')
     print(f'Primary Account Balance: {primary_account_balance}')
